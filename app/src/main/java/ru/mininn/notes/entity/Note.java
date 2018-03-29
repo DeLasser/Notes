@@ -1,71 +1,41 @@
 package ru.mininn.notes.entity;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Relation;
 
 import java.util.List;
 
-@Entity
+
 public class Note {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String name;
-    private String description;
-    private String createDate;
-    private String changeDate;
-    @Ignore
-    private List<ImageUri> imageUris;
+    @Embedded
+    private NoteData note;
 
-    public Note(String name, String description, String createDate, String changeDate, List<ImageUri> imageUris) {
-        this.name = name;
-        this.description = description;
-        this.createDate = createDate;
-        this.changeDate = changeDate;
-        this.imageUris = imageUris;
+    @Relation(parentColumn = "id", entityColumn = "noteId")
+    private List<ImageData> images;
+
+    public Note() {
     }
 
-    public int getId() {
-        return id;
+    public Note(NoteData note, List<ImageData> images) {
+        this.note = note;
+        this.images = images;
     }
 
-    public String getName() {
-        return name;
+    public NoteData getNote() {
+        return note;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNote(NoteData note) {
+        this.note = note;
     }
 
-    public String getDescription() {
-        return description;
+    public List<ImageData> getImages() {
+        return images;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getChangeDate() {
-        return changeDate;
-    }
-
-    public void setChangeDate(String changeDate) {
-        this.changeDate = changeDate;
-    }
-
-    public List<ImageUri> getImageUris() {
-        return imageUris;
-    }
-
-    public void setImageUris(List<ImageUri> imageUris) {
-        this.imageUris = imageUris;
+    public void setImages(List<ImageData> images) {
+        this.images = images;
     }
 }
+
+

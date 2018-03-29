@@ -1,26 +1,45 @@
 package ru.mininn.notes.database;
 
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.media.Image;
+import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import ru.mininn.notes.entity.ImageUri;
+import ru.mininn.notes.entity.ImageData;
 import ru.mininn.notes.entity.Note;
+import ru.mininn.notes.entity.NoteData;
 
-public interface Dao {
+@android.arch.persistence.room.Dao
+public abstract class Dao {
 
-    @Query("SELECT * FROM Note")
-    List<Note> getNotes();
-
-    @Query("SELECT * FROM ImageUri WHERE cityId = :cityId")
-    List<ImageUri> getImages(int cityId);
-
-    @Insert
-    void insertNote(Note note);
+    @Query("SELECT * FROM NoteData")
+    public abstract List<Note> getNotes();
 
     @Insert
-    void insertImages(List<ImageUri> images);
+    public abstract long insertNote(NoteData note);
+
+    @Update
+    public abstract long updateNote(NoteData note);
+
+    @Delete
+    public abstract long deleteNote(NoteData note);
+
+    @Delete
+    public abstract long deleteAllImages(List<ImageData> images);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract void insertImages(List<ImageData> notes);
+
+    public void insertPhotosForNote(long noteId, List<ImageData> images){
+
+        for(ImageData image : images){
+            image.setNoteId(noteId);
+        }
+
+        insertImages(images);
+    }
 
 }
