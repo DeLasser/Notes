@@ -15,14 +15,14 @@ public class Note {
     private String createDate;
     private String changeDate;
     @Ignore
-    private List<DatabaseImage> databaseImages;
+    private List<ImageUri> imageUris;
 
-    public Note(String name, String description, String createDate, String changeDate, List<DatabaseImage> databaseImages) {
+    public Note(String name, String description, String createDate, String changeDate, List<ImageUri> imageUris) {
         this.name = name;
         this.description = description;
         this.createDate = createDate;
         this.changeDate = changeDate;
-        this.databaseImages = databaseImages;
+        this.imageUris = imageUris;
     }
 
     public int getId() {
@@ -61,11 +61,11 @@ public class Note {
         this.changeDate = changeDate;
     }
 
-    public List<DatabaseImage> getDatabaseImages() {
-        return databaseImages;
+    public List<ImageUri> getImageUris() {
+        return imageUris;
     }
 
-    public void setDatabaseImages(List<DatabaseImage> databaseImages) {
-        this.databaseImages = databaseImages;
+    public void setImageUris(List<ImageUri> imageUris) {
+        this.imageUris = imageUris;
     }
 }
