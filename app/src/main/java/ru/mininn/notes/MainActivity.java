@@ -1,6 +1,7 @@
 package ru.mininn.notes;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,26 +36,10 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ImageData> imageUris = new ArrayList<>();
-                imageUris.add(new ImageData("image " + 0));
-                UseCaseHandler useCaseHandler = new UseCaseHandler(new UseCaseThreadPoolScheduler());
-                SaveNote saveNote = new SaveNote(database);
-                useCaseHandler.execute(saveNote,
-                        new SaveNote.RequestValues(new Note(new NoteData("name" + name,
-                                "","",""),imageUris)),
-                        new SaveNote.UseCaseCallback<SaveNote.ResponseValue>() {
-
-                            @Override
-                            public void onSuccess(SaveNote.ResponseValue response) {
-                                logAllTasksNames();
-                                name++;
-                            }
-
-                            @Override
-                            public void onError(String message) {
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),1001);
             }
         });
 

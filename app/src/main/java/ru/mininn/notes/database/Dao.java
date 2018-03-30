@@ -22,13 +22,13 @@ public abstract class Dao {
     public abstract long insertNote(NoteData note);
 
     @Update
-    public abstract long updateNote(NoteData note);
+    public abstract int updateNote(NoteData note);
 
     @Delete
-    public abstract long deleteNote(NoteData note);
+    public abstract void deleteNote(NoteData note);
 
     @Delete
-    public abstract long deleteAllImages(List<ImageData> images);
+    public abstract void deleteAllImages(List<ImageData> images);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract void insertImages(List<ImageData> notes);
